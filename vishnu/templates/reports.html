@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reports - Security Analytics</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'ui-sans-serif', 'system-ui', 'Segoe UI', 'Roboto', 'Helvetica', 'Arial', 'Noto Sans', 'sans-serif'],
+                        mono: ['JetBrains Mono', 'ui-monospace', 'SFMono-Regular', 'Menlo', 'Monaco', 'Consolas', 'Liberation Mono', 'Courier New', 'monospace']
+                    },
+                },
+            },
+        }
+    </script>
+    <link href="{{ url_for('static', filename='css/custom.css') }}" rel="stylesheet">
+</head>
+<body class="font-sans bg-gray-50 text-gray-800">
+    <header class="sticky top-0 z-50 border-b border-gray-200 bg-white/80 backdrop-blur shadow-sm">
+        <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+            <div class="flex h-16 items-center justify-between">
+                <div class="flex items-center gap-3">
+                    <a href="/" class="flex h-10 w-10 items-center justify-center rounded-lg bg-teal-600 border border-teal-700 hover:bg-teal-700 transition-colors">
+                        <svg class="h-5 w-5 text-white" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                            <path d="M12 2l8 4v6c0 5-3.5 9.5-8 10-4.5-.5-8-5-8-10V6l8-4z" stroke="currentColor" stroke-width="1.75" stroke-linejoin="round"/>
+                            <path d="M9.5 12l1.7 1.7L14.8 10" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </a>
+                    <div class="leading-tight">
+                        <div class="text-sm font-semibold tracking-wide text-gray-900">Security Analytics</div>
+                        <div class="text-xs text-gray-500">Reports</div>
+                    </div>
+                </div>
+                <nav class="hidden md:flex items-center space-x-1">
+                    <a href="/" class="px-3 py-2 text-sm font-medium text-gray-600 hover:bg-gray-50 rounded-lg">Dashboard</a>
+                    <a href="/simulation" class="px-3 py-2 text-sm font-medium text-gray-600 hover:bg-gray-50 rounded-lg">Simulation</a>
+                    <a href="/reports" class="px-3 py-2 text-sm font-medium rounded-lg text-teal-700 bg-teal-50">Reports</a>
+                    <a href="/settings" class="px-3 py-2 text-sm font-medium text-gray-600 hover:bg-gray-50 rounded-lg">Settings</a>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <main class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-8">
+        <div class="flex flex-col gap-4 md:flex-row md:items-end md:justify-between mb-6">
+            <div>
+                <h1 class="text-2xl font-bold text-gray-900">Security Reports</h1>
+                <p class="text-gray-600">Attack trends, detections, and prevention actions.</p>
+            </div>
+            <div class="flex flex-wrap gap-2 items-center">
+                <select id="range" class="rounded-lg border border-gray-300 bg-white px-3 py-2 text-sm shadow-sm focus:border-teal-500 focus:outline-none focus:ring-1 focus:ring-teal-500">
+                    <option value="1h">Last 1 hour</option>
+                    <option value="24h" selected>Last 24 hours</option>
+                    <option value="7d">Last 7 days</option>
+                    <option value="30d">Last 30 days</option>
+                </select>
+                <button id="refreshBtn" class="inline-flex items-center rounded-lg bg-teal-600 px-3 py-2 text-sm font-semibold text-white hover:bg-teal-700 transition-colors shadow-sm">
+                    Refresh
+                </button>
+            </div>
+        </div>
+
+        <section class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
+            <div class="rounded-xl border border-gray-200 bg-white p-4">
+                <div class="text-xs text-gray-500">Total Attacks</div>
+                <div id="kpiTotal" class="mt-1 text-2xl font-semibold text-gray-900">0</div>
+            </div>
+            <div class="rounded-xl border border-gray-200 bg-white p-4">
+                <div class="text-xs text-gray-500">Blocked</div>
+                <div id="kpiBlocked" class="mt-1 text-2xl font-semibold text-gray-900">0</div>
+            </div>
+            <div class="rounded-xl border border-gray-200 bg-white p-4">
+                <div class="text-xs text-gray-500">Detection Rate</div>
+                <div id="kpiDetection" class="mt-1 text-2xl font-semibold text-gray-900">0%</div>
+            </div>
+            <div class="rounded-xl border border-gray-200 bg-white p-4">
+                <div class="text-xs text-gray-500">Unique IPs</div>
+                <div id="kpiIps" class="mt-1 text-2xl font-semibold text-gray-900">0</div>
+            </div>
+        </section>
+
+        <section class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
+            <div class="rounded-xl border border-gray-200 bg-white">
+                <div class="px-5 py-4 border-b border-gray-200">
+                    <div class="text-sm font-semibold text-gray-900">Attack Timeline</div>
+                    <div class="text-xs text-gray-500">Attacks vs blocked actions</div>
+                </div>
+                <div class="p-4 h-72">
+                    <canvas id="timelineChart"></canvas>
+                </div>
+            </div>
+            <div class="rounded-xl border border-gray-200 bg-white">
+                <div class="px-5 py-4 border-b border-gray-200">
+                    <div class="text-sm font-semibold text-gray-900">Attack Type Distribution</div>
+                    <div class="text-xs text-gray-500">Share of detected attack types</div>
+                </div>
+                <div class="p-4 h-72">
+                    <canvas id="typeChart"></canvas>
+                </div>
+            </div>
+        </section>
+
+        <section class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            <div class="rounded-xl border border-gray-200 bg-white">
+                <div class="px-5 py-4 border-b border-gray-200">
+                    <div class="text-sm font-semibold text-gray-900">Top Attacker IPs</div>
+                    <div class="text-xs text-gray-500">By number of detected events</div>
+                </div>
+                <div class="max-h-80 overflow-auto">
+                    <table class="min-w-full divide-y divide-gray-200 text-sm">
+                        <thead class="sticky top-0 z-10 bg-gray-50">
+                            <tr class="text-xs font-semibold uppercase tracking-wide text-gray-500">
+                                <th class="px-5 py-3">IP</th>
+                                <th class="px-5 py-3 text-right">Attacks</th>
+                            </tr>
+                        </thead>
+                        <tbody id="topIps" class="divide-y divide-gray-200 bg-white">
+                            <tr><td colspan="2" class="px-5 py-10 text-center text-gray-400">No data</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="rounded-xl border border-gray-200 bg-white">
+                <div class="px-5 py-4 border-b border-gray-200">
+                    <div class="text-sm font-semibold text-gray-900">Prevention Actions</div>
+                    <div class="text-xs text-gray-500">Recent enforcement activity</div>
+                </div>
+                <div class="max-h-80 overflow-auto">
+                    <table class="min-w-full divide-y divide-gray-200 text-sm">
+                        <thead class="sticky top-0 z-10 bg-gray-50">
+                            <tr class="text-xs font-semibold uppercase tracking-wide text-gray-500">
+                                <th class="px-5 py-3">Time</th>
+                                <th class="px-5 py-3">Action</th>
+                                <th class="px-5 py-3">Target</th>
+                            </tr>
+                        </thead>
+                        <tbody id="actionsTable" class="divide-y divide-gray-200 bg-white">
+                            <tr><td colspan="3" class="px-5 py-10 text-center text-gray-400">No actions yet</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        let timelineChart;
+        let typeChart;
+
+        function ensureCharts() {
+            if (!timelineChart) {
+                const ctx = document.getElementById('timelineChart').getContext('2d');
+                timelineChart = new Chart(ctx, {
+                    type: 'line',
+                    data: {
+                        labels: [],
+                        datasets: [
+                            { label: 'Attacks', data: [], borderColor: 'rgba(239, 68, 68, 1)', backgroundColor: 'rgba(239, 68, 68, 0.15)', tension: 0.35, fill: true },
+                            { label: 'Blocked', data: [], borderColor: 'rgba(16, 185, 129, 1)', backgroundColor: 'rgba(16, 185, 129, 0.15)', tension: 0.35, fill: true }
+                        ]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        scales: {
+                            x: { grid: { display: false } },
+                            y: { beginAtZero: true, ticks: { precision: 0 }, grid: { color: 'rgba(0,0,0,0.05)' } }
+                        },
+                        plugins: { legend: { position: 'bottom' } }
+                    }
+                });
+            }
+
+            if (!typeChart) {
+                const ctx2 = document.getElementById('typeChart').getContext('2d');
+                typeChart = new Chart(ctx2, {
+                    type: 'doughnut',
+                    data: {
+                        labels: [],
+                        datasets: [{ data: [], backgroundColor: ['#f97316','#ef4444','#3b82f6','#10b981','#a855f7','#64748b'] }]
+                    },
+                    options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'bottom' } } }
+                });
+            }
+        }
+
+        function setText(id, value) {
+            const el = document.getElementById(id);
+            if (el) el.textContent = value;
+        }
+
+        function renderTopIps(items) {
+            const tbody = document.getElementById('topIps');
+            if (!tbody) return;
+            if (!items || items.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="2" class="px-5 py-10 text-center text-gray-400">No data</td></tr>';
+                return;
+            }
+            tbody.innerHTML = '';
+            items.forEach(row => {
+                const tr = document.createElement('tr');
+                tr.innerHTML = `<td class="px-5 py-3 font-mono">${row.ip}</td><td class="px-5 py-3 text-right">${row.count}</td>`;
+                tbody.appendChild(tr);
+            });
+        }
+
+        function renderActions(items) {
+            const tbody = document.getElementById('actionsTable');
+            if (!tbody) return;
+            if (!items || items.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="3" class="px-5 py-10 text-center text-gray-400">No actions yet</td></tr>';
+                return;
+            }
+            tbody.innerHTML = '';
+            items.slice().reverse().forEach(action => {
+                const tr = document.createElement('tr');
+                const time = new Date(action.timestamp).toLocaleString();
+                tr.innerHTML = `<td class="px-5 py-3 font-mono text-xs">${time}</td><td class="px-5 py-3">${action.action}</td><td class="px-5 py-3 font-mono">${action.ip || 'N/A'}</td>`;
+                tbody.appendChild(tr);
+            });
+        }
+
+        async function refreshReports() {
+            ensureCharts();
+            const range = document.getElementById('range').value;
+            const res = await fetch(`/api/reports/summary?range=${encodeURIComponent(range)}`);
+            const data = await res.json();
+
+            setText('kpiTotal', data.kpis.total_attacks);
+            setText('kpiBlocked', data.kpis.blocked);
+            setText('kpiDetection', `${data.kpis.detection_rate}%`);
+            setText('kpiIps', data.kpis.unique_ips);
+
+            timelineChart.data.labels = data.timeline.labels;
+            timelineChart.data.datasets[0].data = data.timeline.attacks;
+            timelineChart.data.datasets[1].data = data.timeline.blocked;
+            timelineChart.update();
+
+            typeChart.data.labels = data.distribution.labels;
+            typeChart.data.datasets[0].data = data.distribution.values;
+            typeChart.update();
+
+            renderTopIps(data.top_ips);
+            renderActions(data.actions);
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            document.getElementById('refreshBtn').addEventListener('click', refreshReports);
+            document.getElementById('range').addEventListener('change', refreshReports);
+            refreshReports();
+        });
+    </script>
+</body>
+</html>

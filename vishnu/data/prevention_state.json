@@ -1,0 +1,1081 @@
+{
+  "blocked_ips": {
+    "10.0.0.100": "2025-12-22T17:16:14.452519"
+  },
+  "mfa_triggers": {
+    "10.0.0.100": 2,
+    "10.0.0.103": 1
+  },
+  "invalidated_sessions": [],
+  "action_history": [
+    {
+      "timestamp": "2025-12-22T10:42:45.240509",
+      "action": "allow",
+      "ip": "192.168.1.2",
+      "details": {
+        "message": "Request allowed"
+      }
+    },
+    {
+      "timestamp": "2025-12-22T10:42:48.356837",
+      "action": "allow",
+      "ip": "192.168.1.6",
+      "details": {
+        "message": "Request allowed"
+      }
+    },
+    {
+      "timestamp": "2025-12-22T10:42:51.473773",
+      "action": "allow",
+      "ip": "192.168.1.10",
+      "details": {
+        "message": "Request allowed"
+      }
+    },
+    {
+      "timestamp": "2025-12-22T10:42:54.597443",
+      "action": "allow",
+      "ip": "192.168.1.3",
+      "details": {
+        "message": "Request allowed"
+      }
+    },
+    {
+      "timestamp": "2025-12-22T10:42:57.699009",
+      "action": "allow",
+      "ip": "192.168.1.8",
+      "details": {
+        "message": "Request allowed"
+      }
+    },
+    {
+      "timestamp": "2025-12-22T10:43:02.834615",
+      "action": "block_ip",
+      "ip": "10.0.0.100",
+      "details": {
+        "blocked_until": "2025-12-22T11:43:02.834599",
+        "duration_seconds": 3600.0
+      }
+    },
+    {
+      "timestamp": "2025-12-22T10:43:25.354479",
+      "action": "block_ip",
+      "ip": "10.0.0.101",
+      "details": {
+        "blocked_until": "2025-12-22T11:43:25.354460",
+        "duration_seconds": 3600.0
+      }
+    },
+    {
+      "timestamp": "2025-12-22T10:43:40.163501",
+      "action": "block_ip",
+      "ip": "10.0.0.102",
+      "details": {
+        "blocked_until": "2025-12-22T11:43:40.163486",
+        "duration_seconds": 3600.0
+      }
+    },
+    {
+      "timestamp": "2025-12-22T10:43:55.073123",
+      "action": "block_ip",
+      "ip": "10.0.0.103",
+      "details": {
+        "blocked_until": "2025-12-22T11:43:55.073109",
+        "duration_seconds": 3600.0
+      }
+    },
+    {
+      "timestamp": "2025-12-22T10:44:25.255405",
+      "action": "rate_limit",
+      "ip": "172.16.0.50",
+      "details": {
+        "message": "Rate limiting applied to 172.16.0.50"
+      }
+    },
+    {
+      "timestamp": "2025-12-22T10:44:27.440349",
+      "action": "rate_limit",
+      "ip": "172.16.0.50",
+      "details": {
+        "message": "Rate limiting applied to 172.16.0.50"
+      }
+    },
+    {
+      "timestamp": "2025-12-22T10:44:29.626542",
+      "action": "rate_limit",
+      "ip": "172.16.0.50",
+      "details": {
+        "message": "Rate limiting applied to 172.16.0.50"
+      }
+    },
+    {
+      "timestamp": "2025-12-22T10:44:31.808090",
+      "action": "rate_limit",
+      "ip": "172.16.0.50",
+      "details": {
+        "message": "Rate limiting applied to 172.16.0.50"
+      }
+    },
+    {
+      "timestamp": "2025-12-22T10:44:34.029083",
+      "action": "rate_limit",
+      "ip": "172.16.0.50",
+      "details": {
+        "message": "Rate limiting applied to 172.16.0.50"
+      }
+    },
+    {
+      "timestamp": "2025-12-22T10:44:36.229606",
+      "action": "rate_limit",
+      "ip": "172.16.0.50",
+      "details": {
+        "message": "Rate limiting applied to 172.16.0.50"
+      }
+    },
+    {
+      "timestamp": "2025-12-22T10:44:38.433585",
+      "action": "rate_limit",
+      "ip": "172.16.0.50",
+      "details": {
+        "message": "Rate limiting applied to 172.16.0.50"
+      }
+    },
+    {
+      "timestamp": "2025-12-22T10:44:40.736665",
+      "action": "rate_limit",
+      "ip": "172.16.0.50",
+      "details": {
+        "message": "Rate limiting applied to 172.16.0.50"
+      }
+    },
+    {
+      "timestamp": "2025-12-22T10:44:42.978511",
+      "action": "rate_limit",
+      "ip": "172.16.0.50",
+      "details": {
+        "message": "Rate limiting applied to 172.16.0.50"
+      }
+    },
+    {
+      "timestamp": "2025-12-22T10:44:45.284549",
+      "action": "rate_limit",
+      "ip": "172.16.0.50",
+      "details": {
+        "message": "Rate limiting applied to 172.16.0.50"
+      }
+    },
+    {
+      "timestamp": "2025-12-22T10:44:47.580654",
+      "action": "rate_limit",
+      "ip": "172.16.0.50",
+      "details": {
+        "message": "Rate limiting applied to 172.16.0.50"
+      }
+    },
+    {
+      "timestamp": "2025-12-22T10:44:49.889822",
+      "action": "rate_limit",
+      "ip": "172.16.0.50",
+      "details": {
+        "message": "Rate limiting applied to 172.16.0.50"
+      }
+    },
+    {
+      "timestamp": "2025-12-22T10:44:52.194337",
+      "action": "rate_limit",
+      "ip": "172.16.0.50",
+      "details": {
+        "message": "Rate limiting applied to 172.16.0.50"
+      }
+    },
+    {
+      "timestamp": "2025-12-22T10:44:54.505508",
+      "action": "rate_limit",
+      "ip": "172.16.0.50",
+      "details": {
+        "message": "Rate limiting applied to 172.16.0.50"
+      }
+    },
+    {
+      "timestamp": "2025-12-22T10:44:56.747759",
+      "action": "rate_limit",
+      "ip": "172.16.0.50",
+      "details": {
+        "message": "Rate limiting applied to 172.16.0.50"
+      }
+    },
+    {
+      "timestamp": "2025-12-22T10:48:37.086853",
+      "action": "allow",
+      "ip": "192.168.1.8",
+      "details": {
+        "message": "Request allowed"
+      }
+    },
+    {
+      "timestamp": "2025-12-22T10:48:40.152766",
+      "action": "allow",
+      "ip": "192.168.1.1",
+      "details": {
+        "message": "Request allowed"
+      }
+    },
+    {
+      "timestamp": "2025-12-22T10:48:43.250808",
+      "action": "allow",
+      "ip": "192.168.1.3",
+      "details": {
+        "message": "Request allowed"
+      }
+    },
+    {
+      "timestamp": "2025-12-22T10:48:46.319634",
+      "action": "allow",
+      "ip": "192.168.1.8",
+      "details": {
+        "message": "Request allowed"
+      }
+    },
+    {
+      "timestamp": "2025-12-22T10:48:49.409662",
+      "action": "allow",
+      "ip": "192.168.1.2",
+      "details": {
+        "message": "Request allowed"
+      }
+    },
+    {
+      "timestamp": "2025-12-22T10:50:16.773220",
+      "action": "rate_limit",
+      "ip": "172.16.0.50",
+      "details": {
+        "message": "Rate limiting applied to 172.16.0.50"
+      }
+    },
+    {
+      "timestamp": "2025-12-22T10:50:18.986170",
+      "action": "rate_limit",
+      "ip": "172.16.0.50",
+      "details": {
+        "message": "Rate limiting applied to 172.16.0.50"
+      }
+    },
+    {
+      "timestamp": "2025-12-22T10:50:21.216183",
+      "action": "rate_limit",
+      "ip": "172.16.0.50",
+      "details": {
+        "message": "Rate limiting applied to 172.16.0.50"
+      }
+    },
+    {
+      "timestamp": "2025-12-22T10:50:23.451807",
+      "action": "rate_limit",
+      "ip": "172.16.0.50",
+      "details": {
+        "message": "Rate limiting applied to 172.16.0.50"
+      }
+    },
+    {
+      "timestamp": "2025-12-22T10:50:25.674708",
+      "action": "rate_limit",
+      "ip": "172.16.0.50",
+      "details": {
+        "message": "Rate limiting applied to 172.16.0.50"
+      }
+    },
+    {
+      "timestamp": "2025-12-22T10:50:27.883566",
+      "action": "rate_limit",
+      "ip": "172.16.0.50",
+      "details": {
+        "message": "Rate limiting applied to 172.16.0.50"
+      }
+    },
+    {
+      "timestamp": "2025-12-22T10:50:30.084377",
+      "action": "rate_limit",
+      "ip": "172.16.0.50",
+      "details": {
+        "message": "Rate limiting applied to 172.16.0.50"
+      }
+    },
+    {
+      "timestamp": "2025-12-22T10:50:32.286791",
+      "action": "rate_limit",
+      "ip": "172.16.0.50",
+      "details": {
+        "message": "Rate limiting applied to 172.16.0.50"
+      }
+    },
+    {
+      "timestamp": "2025-12-22T10:50:34.538447",
+      "action": "rate_limit",
+      "ip": "172.16.0.50",
+      "details": {
+        "message": "Rate limiting applied to 172.16.0.50"
+      }
+    },
+    {
+      "timestamp": "2025-12-22T10:50:36.789249",
+      "action": "rate_limit",
+      "ip": "172.16.0.50",
+      "details": {
+        "message": "Rate limiting applied to 172.16.0.50"
+      }
+    },
+    {
+      "timestamp": "2025-12-22T10:50:39.055098",
+      "action": "rate_limit",
+      "ip": "172.16.0.50",
+      "details": {
+        "message": "Rate limiting applied to 172.16.0.50"
+      }
+    },
+    {
+      "timestamp": "2025-12-22T10:50:41.366631",
+      "action": "rate_limit",
+      "ip": "172.16.0.50",
+      "details": {
+        "message": "Rate limiting applied to 172.16.0.50"
+      }
+    },
+    {
+      "timestamp": "2025-12-22T10:50:43.646328",
+      "action": "rate_limit",
+      "ip": "172.16.0.50",
+      "details": {
+        "message": "Rate limiting applied to 172.16.0.50"
+      }
+    },
+    {
+      "timestamp": "2025-12-22T10:50:46.009679",
+      "action": "rate_limit",
+      "ip": "172.16.0.50",
+      "details": {
+        "message": "Rate limiting applied to 172.16.0.50"
+      }
+    },
+    {
+      "timestamp": "2025-12-22T10:50:48.306368",
+      "action": "rate_limit",
+      "ip": "172.16.0.50",
+      "details": {
+        "message": "Rate limiting applied to 172.16.0.50"
+      }
+    },
+    {
+      "timestamp": "2025-12-22T11:15:55.644077",
+      "action": "allow",
+      "ip": "192.168.1.4",
+      "details": {
+        "message": "Request allowed"
+      }
+    },
+    {
+      "timestamp": "2025-12-22T11:15:58.763688",
+      "action": "allow",
+      "ip": "192.168.1.3",
+      "details": {
+        "message": "Request allowed"
+      }
+    },
+    {
+      "timestamp": "2025-12-22T11:16:01.854853",
+      "action": "allow",
+      "ip": "192.168.1.10",
+      "details": {
+        "message": "Request allowed"
+      }
+    },
+    {
+      "timestamp": "2025-12-22T11:16:04.952987",
+      "action": "allow",
+      "ip": "192.168.1.6",
+      "details": {
+        "message": "Request allowed"
+      }
+    },
+    {
+      "timestamp": "2025-12-22T11:16:08.070578",
+      "action": "allow",
+      "ip": "192.168.1.4",
+      "details": {
+        "message": "Request allowed"
+      }
+    },
+    {
+      "timestamp": "2025-12-22T11:17:35.322256",
+      "action": "rate_limit",
+      "ip": "172.16.0.50",
+      "details": {
+        "message": "Rate limiting applied to 172.16.0.50"
+      }
+    },
+    {
+      "timestamp": "2025-12-22T11:17:37.510994",
+      "action": "rate_limit",
+      "ip": "172.16.0.50",
+      "details": {
+        "message": "Rate limiting applied to 172.16.0.50"
+      }
+    },
+    {
+      "timestamp": "2025-12-22T11:17:39.712445",
+      "action": "rate_limit",
+      "ip": "172.16.0.50",
+      "details": {
+        "message": "Rate limiting applied to 172.16.0.50"
+      }
+    },
+    {
+      "timestamp": "2025-12-22T11:17:41.914250",
+      "action": "rate_limit",
+      "ip": "172.16.0.50",
+      "details": {
+        "message": "Rate limiting applied to 172.16.0.50"
+      }
+    },
+    {
+      "timestamp": "2025-12-22T11:17:44.104593",
+      "action": "rate_limit",
+      "ip": "172.16.0.50",
+      "details": {
+        "message": "Rate limiting applied to 172.16.0.50"
+      }
+    },
+    {
+      "timestamp": "2025-12-22T11:17:46.301943",
+      "action": "rate_limit",
+      "ip": "172.16.0.50",
+      "details": {
+        "message": "Rate limiting applied to 172.16.0.50"
+      }
+    },
+    {
+      "timestamp": "2025-12-22T11:17:48.522907",
+      "action": "rate_limit",
+      "ip": "172.16.0.50",
+      "details": {
+        "message": "Rate limiting applied to 172.16.0.50"
+      }
+    },
+    {
+      "timestamp": "2025-12-22T11:17:50.711477",
+      "action": "rate_limit",
+      "ip": "172.16.0.50",
+      "details": {
+        "message": "Rate limiting applied to 172.16.0.50"
+      }
+    },
+    {
+      "timestamp": "2025-12-22T11:17:52.914370",
+      "action": "rate_limit",
+      "ip": "172.16.0.50",
+      "details": {
+        "message": "Rate limiting applied to 172.16.0.50"
+      }
+    },
+    {
+      "timestamp": "2025-12-22T11:17:55.116849",
+      "action": "rate_limit",
+      "ip": "172.16.0.50",
+      "details": {
+        "message": "Rate limiting applied to 172.16.0.50"
+      }
+    },
+    {
+      "timestamp": "2025-12-22T11:17:57.335851",
+      "action": "rate_limit",
+      "ip": "172.16.0.50",
+      "details": {
+        "message": "Rate limiting applied to 172.16.0.50"
+      }
+    },
+    {
+      "timestamp": "2025-12-22T11:17:59.571589",
+      "action": "rate_limit",
+      "ip": "172.16.0.50",
+      "details": {
+        "message": "Rate limiting applied to 172.16.0.50"
+      }
+    },
+    {
+      "timestamp": "2025-12-22T11:18:01.778958",
+      "action": "rate_limit",
+      "ip": "172.16.0.50",
+      "details": {
+        "message": "Rate limiting applied to 172.16.0.50"
+      }
+    },
+    {
+      "timestamp": "2025-12-22T11:18:04.012998",
+      "action": "rate_limit",
+      "ip": "172.16.0.50",
+      "details": {
+        "message": "Rate limiting applied to 172.16.0.50"
+      }
+    },
+    {
+      "timestamp": "2025-12-22T11:18:06.254569",
+      "action": "rate_limit",
+      "ip": "172.16.0.50",
+      "details": {
+        "message": "Rate limiting applied to 172.16.0.50"
+      }
+    },
+    {
+      "timestamp": "2025-12-22T11:22:28.933525",
+      "action": "allow",
+      "ip": "192.168.1.4",
+      "details": {
+        "message": "Request allowed"
+      }
+    },
+    {
+      "timestamp": "2025-12-22T11:22:32.003375",
+      "action": "allow",
+      "ip": "192.168.1.9",
+      "details": {
+        "message": "Request allowed"
+      }
+    },
+    {
+      "timestamp": "2025-12-22T11:22:35.081772",
+      "action": "allow",
+      "ip": "192.168.1.3",
+      "details": {
+        "message": "Request allowed"
+      }
+    },
+    {
+      "timestamp": "2025-12-22T11:22:38.155890",
+      "action": "allow",
+      "ip": "192.168.1.8",
+      "details": {
+        "message": "Request allowed"
+      }
+    },
+    {
+      "timestamp": "2025-12-22T11:22:41.237211",
+      "action": "allow",
+      "ip": "192.168.1.2",
+      "details": {
+        "message": "Request allowed"
+      }
+    },
+    {
+      "timestamp": "2025-12-22T11:24:08.506611",
+      "action": "rate_limit",
+      "ip": "172.16.0.50",
+      "details": {
+        "message": "Rate limiting applied to 172.16.0.50"
+      }
+    },
+    {
+      "timestamp": "2025-12-22T11:24:10.707369",
+      "action": "rate_limit",
+      "ip": "172.16.0.50",
+      "details": {
+        "message": "Rate limiting applied to 172.16.0.50"
+      }
+    },
+    {
+      "timestamp": "2025-12-22T11:24:12.917193",
+      "action": "rate_limit",
+      "ip": "172.16.0.50",
+      "details": {
+        "message": "Rate limiting applied to 172.16.0.50"
+      }
+    },
+    {
+      "timestamp": "2025-12-22T11:24:15.107039",
+      "action": "rate_limit",
+      "ip": "172.16.0.50",
+      "details": {
+        "message": "Rate limiting applied to 172.16.0.50"
+      }
+    },
+    {
+      "timestamp": "2025-12-22T11:24:17.300358",
+      "action": "rate_limit",
+      "ip": "172.16.0.50",
+      "details": {
+        "message": "Rate limiting applied to 172.16.0.50"
+      }
+    },
+    {
+      "timestamp": "2025-12-22T11:24:19.527938",
+      "action": "rate_limit",
+      "ip": "172.16.0.50",
+      "details": {
+        "message": "Rate limiting applied to 172.16.0.50"
+      }
+    },
+    {
+      "timestamp": "2025-12-22T11:24:21.722801",
+      "action": "rate_limit",
+      "ip": "172.16.0.50",
+      "details": {
+        "message": "Rate limiting applied to 172.16.0.50"
+      }
+    },
+    {
+      "timestamp": "2025-12-22T11:24:23.914520",
+      "action": "rate_limit",
+      "ip": "172.16.0.50",
+      "details": {
+        "message": "Rate limiting applied to 172.16.0.50"
+      }
+    },
+    {
+      "timestamp": "2025-12-22T11:24:26.106765",
+      "action": "rate_limit",
+      "ip": "172.16.0.50",
+      "details": {
+        "message": "Rate limiting applied to 172.16.0.50"
+      }
+    },
+    {
+      "timestamp": "2025-12-22T11:24:28.315353",
+      "action": "rate_limit",
+      "ip": "172.16.0.50",
+      "details": {
+        "message": "Rate limiting applied to 172.16.0.50"
+      }
+    },
+    {
+      "timestamp": "2025-12-22T11:24:30.541793",
+      "action": "rate_limit",
+      "ip": "172.16.0.50",
+      "details": {
+        "message": "Rate limiting applied to 172.16.0.50"
+      }
+    },
+    {
+      "timestamp": "2025-12-22T11:24:32.771597",
+      "action": "rate_limit",
+      "ip": "172.16.0.50",
+      "details": {
+        "message": "Rate limiting applied to 172.16.0.50"
+      }
+    },
+    {
+      "timestamp": "2025-12-22T11:24:35.008532",
+      "action": "rate_limit",
+      "ip": "172.16.0.50",
+      "details": {
+        "message": "Rate limiting applied to 172.16.0.50"
+      }
+    },
+    {
+      "timestamp": "2025-12-22T11:24:37.231207",
+      "action": "rate_limit",
+      "ip": "172.16.0.50",
+      "details": {
+        "message": "Rate limiting applied to 172.16.0.50"
+      }
+    },
+    {
+      "timestamp": "2025-12-22T11:24:39.458961",
+      "action": "rate_limit",
+      "ip": "172.16.0.50",
+      "details": {
+        "message": "Rate limiting applied to 172.16.0.50"
+      }
+    },
+    {
+      "timestamp": "2025-12-22T11:26:41.803668",
+      "action": "allow",
+      "ip": "192.168.1.10",
+      "details": {
+        "message": "Request allowed"
+      }
+    },
+    {
+      "timestamp": "2025-12-22T11:26:44.900585",
+      "action": "allow",
+      "ip": "192.168.1.2",
+      "details": {
+        "message": "Request allowed"
+      }
+    },
+    {
+      "timestamp": "2025-12-22T11:26:48.038205",
+      "action": "allow",
+      "ip": "192.168.1.5",
+      "details": {
+        "message": "Request allowed"
+      }
+    },
+    {
+      "timestamp": "2025-12-22T11:26:51.195006",
+      "action": "allow",
+      "ip": "192.168.1.8",
+      "details": {
+        "message": "Request allowed"
+      }
+    },
+    {
+      "timestamp": "2025-12-22T11:26:54.353921",
+      "action": "allow",
+      "ip": "192.168.1.4",
+      "details": {
+        "message": "Request allowed"
+      }
+    },
+    {
+      "timestamp": "2025-12-22T11:28:21.556584",
+      "action": "rate_limit",
+      "ip": "172.16.0.50",
+      "details": {
+        "message": "Rate limiting applied to 172.16.0.50"
+      }
+    },
+    {
+      "timestamp": "2025-12-22T11:28:23.762510",
+      "action": "rate_limit",
+      "ip": "172.16.0.50",
+      "details": {
+        "message": "Rate limiting applied to 172.16.0.50"
+      }
+    },
+    {
+      "timestamp": "2025-12-22T11:28:26.048655",
+      "action": "rate_limit",
+      "ip": "172.16.0.50",
+      "details": {
+        "message": "Rate limiting applied to 172.16.0.50"
+      }
+    },
+    {
+      "timestamp": "2025-12-22T11:28:28.319642",
+      "action": "rate_limit",
+      "ip": "172.16.0.50",
+      "details": {
+        "message": "Rate limiting applied to 172.16.0.50"
+      }
+    },
+    {
+      "timestamp": "2025-12-22T11:28:30.593490",
+      "action": "rate_limit",
+      "ip": "172.16.0.50",
+      "details": {
+        "message": "Rate limiting applied to 172.16.0.50"
+      }
+    },
+    {
+      "timestamp": "2025-12-22T11:28:32.820296",
+      "action": "rate_limit",
+      "ip": "172.16.0.50",
+      "details": {
+        "message": "Rate limiting applied to 172.16.0.50"
+      }
+    },
+    {
+      "timestamp": "2025-12-22T11:28:35.102127",
+      "action": "rate_limit",
+      "ip": "172.16.0.50",
+      "details": {
+        "message": "Rate limiting applied to 172.16.0.50"
+      }
+    },
+    {
+      "timestamp": "2025-12-22T11:28:37.401907",
+      "action": "rate_limit",
+      "ip": "172.16.0.50",
+      "details": {
+        "message": "Rate limiting applied to 172.16.0.50"
+      }
+    },
+    {
+      "timestamp": "2025-12-22T11:28:39.721776",
+      "action": "rate_limit",
+      "ip": "172.16.0.50",
+      "details": {
+        "message": "Rate limiting applied to 172.16.0.50"
+      }
+    },
+    {
+      "timestamp": "2025-12-22T11:28:41.945398",
+      "action": "rate_limit",
+      "ip": "172.16.0.50",
+      "details": {
+        "message": "Rate limiting applied to 172.16.0.50"
+      }
+    },
+    {
+      "timestamp": "2025-12-22T11:28:44.176053",
+      "action": "rate_limit",
+      "ip": "172.16.0.50",
+      "details": {
+        "message": "Rate limiting applied to 172.16.0.50"
+      }
+    },
+    {
+      "timestamp": "2025-12-22T11:28:46.418143",
+      "action": "rate_limit",
+      "ip": "172.16.0.50",
+      "details": {
+        "message": "Rate limiting applied to 172.16.0.50"
+      }
+    },
+    {
+      "timestamp": "2025-12-22T11:28:48.737896",
+      "action": "rate_limit",
+      "ip": "172.16.0.50",
+      "details": {
+        "message": "Rate limiting applied to 172.16.0.50"
+      }
+    },
+    {
+      "timestamp": "2025-12-22T11:28:51.041148",
+      "action": "rate_limit",
+      "ip": "172.16.0.50",
+      "details": {
+        "message": "Rate limiting applied to 172.16.0.50"
+      }
+    },
+    {
+      "timestamp": "2025-12-22T11:28:53.285077",
+      "action": "rate_limit",
+      "ip": "172.16.0.50",
+      "details": {
+        "message": "Rate limiting applied to 172.16.0.50"
+      }
+    },
+    {
+      "timestamp": "2025-12-22T12:00:41.900554",
+      "action": "allow",
+      "ip": "192.168.1.5",
+      "details": {
+        "message": "Request allowed"
+      }
+    },
+    {
+      "timestamp": "2025-12-22T12:00:44.969807",
+      "action": "allow",
+      "ip": "192.168.1.6",
+      "details": {
+        "message": "Request allowed"
+      }
+    },
+    {
+      "timestamp": "2025-12-22T12:00:48.066131",
+      "action": "allow",
+      "ip": "192.168.1.3",
+      "details": {
+        "message": "Request allowed"
+      }
+    },
+    {
+      "timestamp": "2025-12-22T12:00:51.175984",
+      "action": "allow",
+      "ip": "192.168.1.5",
+      "details": {
+        "message": "Request allowed"
+      }
+    },
+    {
+      "timestamp": "2025-12-22T12:00:54.307549",
+      "action": "allow",
+      "ip": "192.168.1.10",
+      "details": {
+        "message": "Request allowed"
+      }
+    },
+    {
+      "timestamp": "2025-12-22T12:00:59.439206",
+      "action": "trigger_mfa",
+      "ip": "10.0.0.100",
+      "details": {
+        "trigger_count": 1,
+        "reason": null
+      }
+    },
+    {
+      "timestamp": "2025-12-22T12:01:02.105564",
+      "action": "block_ip",
+      "ip": "10.0.0.100",
+      "details": {
+        "blocked_until": "2025-12-22T13:01:02.105545",
+        "duration_seconds": 3600.0
+      }
+    },
+    {
+      "timestamp": "2025-12-22T12:01:22.077257",
+      "action": "block_ip",
+      "ip": "10.0.0.101",
+      "details": {
+        "blocked_until": "2025-12-22T13:01:22.077242",
+        "duration_seconds": 3600.0
+      }
+    },
+    {
+      "timestamp": "2025-12-22T12:01:36.881824",
+      "action": "block_ip",
+      "ip": "10.0.0.102",
+      "details": {
+        "blocked_until": "2025-12-22T13:01:36.881811",
+        "duration_seconds": 3600.0
+      }
+    },
+    {
+      "timestamp": "2025-12-22T12:01:51.692623",
+      "action": "trigger_mfa",
+      "ip": "10.0.0.103",
+      "details": {
+        "trigger_count": 1,
+        "reason": null
+      }
+    },
+    {
+      "timestamp": "2025-12-22T12:01:54.111723",
+      "action": "block_ip",
+      "ip": "10.0.0.103",
+      "details": {
+        "blocked_until": "2025-12-22T13:01:54.111708",
+        "duration_seconds": 3600.0
+      }
+    },
+    {
+      "timestamp": "2025-12-22T12:02:22.039729",
+      "action": "rate_limit",
+      "ip": "172.16.0.50",
+      "details": {
+        "message": "Rate limiting applied to 172.16.0.50"
+      }
+    },
+    {
+      "timestamp": "2025-12-22T12:02:24.302172",
+      "action": "rate_limit",
+      "ip": "172.16.0.50",
+      "details": {
+        "message": "Rate limiting applied to 172.16.0.50"
+      }
+    },
+    {
+      "timestamp": "2025-12-22T12:02:26.593411",
+      "action": "rate_limit",
+      "ip": "172.16.0.50",
+      "details": {
+        "message": "Rate limiting applied to 172.16.0.50"
+      }
+    },
+    {
+      "timestamp": "2025-12-22T12:02:28.806225",
+      "action": "rate_limit",
+      "ip": "172.16.0.50",
+      "details": {
+        "message": "Rate limiting applied to 172.16.0.50"
+      }
+    },
+    {
+      "timestamp": "2025-12-22T12:02:31.037406",
+      "action": "rate_limit",
+      "ip": "172.16.0.50",
+      "details": {
+        "message": "Rate limiting applied to 172.16.0.50"
+      }
+    },
+    {
+      "timestamp": "2025-12-22T12:02:33.348845",
+      "action": "rate_limit",
+      "ip": "172.16.0.50",
+      "details": {
+        "message": "Rate limiting applied to 172.16.0.50"
+      }
+    },
+    {
+      "timestamp": "2025-12-22T12:02:35.599131",
+      "action": "rate_limit",
+      "ip": "172.16.0.50",
+      "details": {
+        "message": "Rate limiting applied to 172.16.0.50"
+      }
+    },
+    {
+      "timestamp": "2025-12-22T12:02:37.920303",
+      "action": "rate_limit",
+      "ip": "172.16.0.50",
+      "details": {
+        "message": "Rate limiting applied to 172.16.0.50"
+      }
+    },
+    {
+      "timestamp": "2025-12-22T12:02:40.206070",
+      "action": "rate_limit",
+      "ip": "172.16.0.50",
+      "details": {
+        "message": "Rate limiting applied to 172.16.0.50"
+      }
+    },
+    {
+      "timestamp": "2025-12-22T12:02:42.421595",
+      "action": "rate_limit",
+      "ip": "172.16.0.50",
+      "details": {
+        "message": "Rate limiting applied to 172.16.0.50"
+      }
+    },
+    {
+      "timestamp": "2025-12-22T12:02:44.677489",
+      "action": "rate_limit",
+      "ip": "172.16.0.50",
+      "details": {
+        "message": "Rate limiting applied to 172.16.0.50"
+      }
+    },
+    {
+      "timestamp": "2025-12-22T12:02:46.922925",
+      "action": "rate_limit",
+      "ip": "172.16.0.50",
+      "details": {
+        "message": "Rate limiting applied to 172.16.0.50"
+      }
+    },
+    {
+      "timestamp": "2025-12-22T12:02:49.208276",
+      "action": "rate_limit",
+      "ip": "172.16.0.50",
+      "details": {
+        "message": "Rate limiting applied to 172.16.0.50"
+      }
+    },
+    {
+      "timestamp": "2025-12-22T12:02:51.518042",
+      "action": "rate_limit",
+      "ip": "172.16.0.50",
+      "details": {
+        "message": "Rate limiting applied to 172.16.0.50"
+      }
+    },
+    {
+      "timestamp": "2025-12-22T12:02:53.746846",
+      "action": "rate_limit",
+      "ip": "172.16.0.50",
+      "details": {
+        "message": "Rate limiting applied to 172.16.0.50"
+      }
+    },
+    {
+      "timestamp": "2025-12-22T16:16:11.869672",
+      "action": "trigger_mfa",
+      "ip": "10.0.0.100",
+      "details": {
+        "trigger_count": 2,
+        "reason": null
+      }
+    },
+    {
+      "timestamp": "2025-12-22T16:16:14.452537",
+      "action": "block_ip",
+      "ip": "10.0.0.100",
+      "details": {
+        "blocked_until": "2025-12-22T17:16:14.452519",
+        "duration_seconds": 3600.0
+      }
+    }
+  ],
+  "saved_at": "2025-12-22T16:16:14.452570"
+}

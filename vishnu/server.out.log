@@ -1,0 +1,7 @@
+============================================================
+AI-Powered Web Attack Detection & Prevention System
+============================================================
+
+Initializing system...
+Model loaded from models/best_model.pkl
+Label encoder loaded from models\label_encoder.pkl

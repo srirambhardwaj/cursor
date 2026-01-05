@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Attack Simulation - Security Analytics</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        // Chart is initialized after DOM load (canvas is in the page body)
+        let simulationChart = null;
+
+        function titleCaseAttackType(value) {
+            return String(value || '')
+                .replace(/_/g, ' ')
+                .replace(/\b\w/g, l => l.toUpperCase());
+        }
+
+        function ensureChart() {
+            if (simulationChart) return simulationChart;
+            const canvas = document.getElementById('simulationChart');
+            if (!canvas) return null;
+            const ctx = canvas.getContext('2d');
+            if (!ctx) return null;
+
+            simulationChart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: [],
+                    datasets: [
+                        {
+                            label: 'Detected',
+                            data: [],
+                            backgroundColor: 'rgba(59, 130, 246, 0.7)',
+                            borderColor: 'rgba(59, 130, 246, 1)',
+                            borderWidth: 1,
+                            borderRadius: 6,
+                            barThickness: 18,
+                            maxBarThickness: 22,
+                            categoryPercentage: 0.55,
+                            barPercentage: 0.75
+                        },
+                        {
+                            label: 'Total',
+                            data: [],
+                            backgroundColor: 'rgba(16, 185, 129, 0.7)',
+                            borderColor: 'rgba(16, 185, 129, 1)',
+                            borderWidth: 1,
+                            borderRadius: 6,
+                            barThickness: 18,
+                            maxBarThickness: 22,
+                            categoryPercentage: 0.55,
+                            barPercentage: 0.75
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        x: {
+                            grid: { display: false },
+                            ticks: { maxRotation: 45, minRotation: 45 }
+                        },
+                        y: {
+                            beginAtZero: true,
+                            grid: { color: 'rgba(0, 0, 0, 0.05)' },
+                            ticks: { precision: 0 }
+                        }
+                    },
+                    plugins: {
+                        legend: { display: false },
+                        tooltip: { mode: 'index', intersect: false }
+                    },
+                    animation: { duration: 400 }
+                }
+            });
+
+            return simulationChart;
+        }
+
+        // Update chart with new data
+        function updateChart(data) {
+            const chart = ensureChart();
+            if (!chart) return;
+
+            const rows = Array.isArray(data) ? data : (data ? [data] : []);
+            const labels = [];
+            const detectedData = [];
+            const totalData = [];
+
+            rows.forEach(item => {
+                if (!item || item.attack_type === undefined) return;
+                labels.push(titleCaseAttackType(item.attack_type));
+                detectedData.push(Number(item.detected || 0));
+                totalData.push(Number(item.requests_sent || 0));
+            });
+
+            chart.data.labels = labels;
+            chart.data.datasets[0].data = detectedData;
+            chart.data.datasets[1].data = totalData;
+            chart.update();
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            ensureChart();
+        });
+    </script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'ui-sans-serif', 'system-ui', 'Segoe UI', 'Roboto', 'Helvetica', 'Arial', 'Noto Sans', 'sans-serif'],
+                        mono: ['JetBrains Mono', 'ui-monospace', 'SFMono-Regular', 'Menlo', 'Monaco', 'Consolas', 'Liberation Mono', 'Courier New', 'monospace']
+                    },
+                },
+            },
+        }
+    </script>
+    <link href="{{ url_for('static', filename='css/custom.css') }}" rel="stylesheet">
+</head>
+<body class="font-sans bg-gray-50 text-gray-800">
+    <!-- Top Navigation Bar -->
+    <header class="sticky top-0 z-50 border-b border-gray-200 bg-white/80 backdrop-blur shadow-sm">
+        <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+            <div class="flex h-16 items-center justify-between">
+                <div class="flex items-center gap-3">
+                    <a href="/" class="flex h-10 w-10 items-center justify-center rounded-lg bg-teal-600 border border-teal-700 hover:bg-teal-700 transition-colors">
+                        <svg class="h-5 w-5 text-white" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                            <path d="M12 2l8 4v6c0 5-3.5 9.5-8 10-4.5-.5-8-5-8-10V6l8-4z" stroke="currentColor" stroke-width="1.75" stroke-linejoin="round"/>
+                            <path d="M9.5 12l1.7 1.7L14.8 10" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </a>
+                    <div class="leading-tight">
+                        <div class="text-sm font-semibold tracking-wide text-gray-900">Security Analytics</div>
+                        <div class="text-xs text-gray-500">Attack Simulation</div>
+                    </div>
+                </div>
+                <nav class="hidden md:flex items-center space-x-1">
+                    <a href="/" class="px-3 py-2 text-sm font-medium text-gray-600 hover:bg-gray-50 rounded-lg">Dashboard</a>
+                    <a href="/simulation" class="px-3 py-2 text-sm font-medium rounded-lg text-teal-700 bg-teal-50">Simulation</a>
+                    <a href="/reports" class="px-3 py-2 text-sm font-medium text-gray-600 hover:bg-gray-50 rounded-lg">Reports</a>
+                    <a href="/settings" class="px-3 py-2 text-sm font-medium text-gray-600 hover:bg-gray-50 rounded-lg">Settings</a>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <main class="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 py-8">
+        <div class="mb-8">
+            <h1 class="text-2xl font-bold text-gray-900 mb-2">Attack Simulation</h1>
+            <p class="text-gray-600">Test the system's detection capabilities by simulating different types of attacks.</p>
+        </div>
+        
+        <!-- Info Banner -->
+        <div class="bg-blue-50 border-l-4 border-blue-400 p-4 mb-6 rounded-r">
+            <div class="flex">
+                <div class="flex-shrink-0">
+                    <svg class="h-5 w-5 text-blue-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                        <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 100 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd" />
+                    </svg>
+                </div>
+                <div class="ml-3">
+                    <p class="text-sm text-blue-700">
+                        Click the button below to start a simulated attack. This will trigger the backend simulation script.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Simulation Controls -->
+        <div class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden mb-8">
+            <div class="p-6">
+                <div class="mb-6">
+                    <label for="attackType" class="block text-sm font-medium text-gray-700 mb-2">Select Attack Type</label>
+                    <select id="attackType" class="w-full px-4 py-2.5 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-teal-500 focus:border-teal-500 text-sm">
+                        <option value="brute_force">Brute Force Attack</option>
+                        <option value="sql_injection">SQL Injection</option>
+                        <option value="xss">Cross-Site Scripting (XSS)</option>
+                        <option value="credential_stuffing">Credential Stuffing</option>
+                        <option value="bot_traffic">Bot Traffic</option>
+                        <option value="normal_traffic">Normal Traffic</option>
+                        <option value="full_simulation">Full Simulation (All Attacks)</option>
+                    </select>
+                </div>
+                
+                <div class="flex justify-center">
+                    <button id="simulateBtn" 
+                            class="px-6 py-3 bg-teal-600 hover:bg-teal-700 text-white font-medium rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-teal-500 transition-colors"
+                            onclick="simulateAttack()">
+                        <svg class="w-4 h-4 mr-2 -ml-1 inline-block" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z"></path>
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                        </svg>
+                        Run Simulation
+                    </button>
+                </div>
+                
+                <div id="status" class="mt-6 text-center">
+                    <p class="text-sm text-gray-500">Select an attack type and click the button to start simulation</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Results Section -->
+        <div id="results" class="hidden">
+            <div class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
+                <div class="px-6 py-4 border-b border-gray-200">
+                    <h3 class="text-lg font-medium text-gray-900">Simulation Results</h3>
+                    <p id="simulationType" class="text-sm text-gray-500 mt-1"></p>
+                </div>
+                <div class="p-6">
+                    <div class="bg-gray-50 p-4 rounded-lg border border-gray-100">
+                        <pre id="output" class="text-sm font-mono overflow-auto max-h-96"></pre>
+                    </div>
+                    
+                    <!-- Chart Container -->
+                    <div class="mt-6 bg-white p-4 rounded-lg border border-gray-200">
+                        <div class="flex justify-between items-center mb-4">
+                            <h4 class="text-sm font-medium text-gray-700">Attack Simulation Results</h4>
+                            <div class="flex space-x-2">
+                                <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
+                                    <span class="w-2 h-2 mr-1 bg-blue-500 rounded-full"></span>
+                                    Detected
+                                </span>
+                                <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
+                                    <span class="w-2 h-2 mr-1 bg-green-500 rounded-full"></span>
+                                    Total
+                                </span>
+                            </div>
+                        </div>
+                        <div class="h-64 w-full">
+                            <canvas id="simulationChart"></canvas>
+                        </div>
+                    </div>
+
+                    <!-- Stats Grid -->
+                    <div id="simulationStats" class="mt-6 grid grid-cols-1 md:grid-cols-3 gap-4">
+                        <div class="bg-blue-50 p-4 rounded-lg border border-blue-100">
+                            <p class="text-xs font-medium text-blue-700 uppercase tracking-wider">Status</p>
+                            <p id="statusBadge" class="mt-1 text-sm font-medium text-blue-800">Ready</p>
+                        </div>
+                        <div class="bg-green-50 p-4 rounded-lg border border-green-100">
+                            <p class="text-xs font-medium text-green-700 uppercase tracking-wider">Requests Sent</p>
+                            <p id="requestsCount" class="mt-1 text-xl font-semibold text-green-800">0</p>
+                        </div>
+                        <div class="bg-amber-50 p-4 rounded-lg border border-amber-100">
+                            <p class="text-xs font-medium text-amber-700 uppercase tracking-wider">Detected</p>
+                            <p id="detectedCount" class="mt-1 text-xl font-semibold text-amber-800">0</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+            </div>
+            
+            <div class="mt-8 pt-6 border-t border-gray-200">
+                <a href="/" class="text-blue-600 hover:text-blue-800 text-sm font-medium">
+                    &larr; Back to Dashboard
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Format the output to be more readable
+        function formatOutput(data) {
+            if (!data) return 'No data received';
+            
+            // If it's already a string, return as is
+            if (typeof data === 'string') return data;
+            
+            // If it's an array, join with newlines
+            if (Array.isArray(data)) {
+                return data.join('\n');
+            }
+            
+            // If it's an object, pretty print it
+            return JSON.stringify(data, null, 2);
+        }
+
+        // Update the UI with simulation results
+        function updateUI(data) {
+            const output = document.getElementById('output');
+            const status = document.getElementById('status');
+            const results = document.getElementById('results');
+            const simulationType = document.getElementById('simulationType');
+            const statusBadge = document.getElementById('statusBadge');
+            const requestsCount = document.getElementById('requestsCount');
+            const detectedCount = document.getElementById('detectedCount');
+            const simulateBtn = document.getElementById('simulateBtn');
+            
+            // Show results section
+            results.classList.remove('hidden');
+            document.getElementById('simulationStats').classList.remove('hidden');
+            
+            // Update simulation type
+            const attackType = document.getElementById('attackType');
+            const attackName = attackType.options[attackType.selectedIndex].text;
+            simulationType.textContent = `Simulation Type: ${attackName}`;
+            
+            // Process the response data
+            if (data && data.status) {
+                // Update status
+                statusBadge.textContent = data.status;
+                
+                // Update counts if available
+                if (data.requests_sent !== undefined) {
+                    requestsCount.textContent = data.requests_sent;
+                }
+                
+                if (data.detected !== undefined) {
+                    detectedCount.textContent = data.detected;
+                }
+                
+                // Update output
+                if (Array.isArray(data.results) && data.results.length) {
+                    output.textContent = data.results
+                        .map(r => `${titleCaseAttackType(r.attack_type)}: ${r.detected || 0}/${r.requests_sent || 0} detected`)
+                        .join('\n');
+                } else if (data.message) {
+                    output.textContent = formatOutput(data.message);
+                } else if (data.logs) {
+                    output.textContent = formatOutput(data.logs);
+                } else {
+                    output.textContent = formatOutput(data);
+                }
+                
+                // Update status badge color based on status
+                if (data.status.toLowerCase().includes('complete') || data.status.toLowerCase().includes('success')) {
+                    statusBadge.className = 'mt-1 text-sm font-medium text-green-800';
+                    statusBadge.parentElement.className = 'bg-green-50 p-4 rounded-lg border border-green-100';
+                } else if (data.status.toLowerCase().includes('error') || data.status.toLowerCase().includes('fail')) {
+                    statusBadge.className = 'mt-1 text-sm font-medium text-red-800';
+                    statusBadge.parentElement.className = 'bg-red-50 p-4 rounded-lg border border-red-100';
+                } else {
+                    statusBadge.className = 'mt-1 text-sm font-medium text-blue-800';
+                    statusBadge.parentElement.className = 'bg-blue-50 p-4 rounded-lg border border-blue-100';
+                }
+                
+                // Re-enable the button
+                simulateBtn.disabled = false;
+                simulateBtn.innerHTML = `
+                    <svg class="w-4 h-4 mr-2 -ml-1 inline-block" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z"></path>
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                    </svg>
+                    Run Simulation
+                `;
+            } else {
+                // Handle error case
+                statusBadge.textContent = 'Error';
+                statusBadge.className = 'mt-1 text-sm font-medium text-red-800';
+                statusBadge.parentElement.className = 'bg-red-50 p-4 rounded-lg border border-red-100';
+                output.textContent = 'Error: Invalid response from server';
+                
+                // Re-enable the button
+                simulateBtn.disabled = false;
+                simulateBtn.innerHTML = `
+                    <svg class="w-4 h-4 mr-2 -ml-1 inline-block" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path>
+                    </svg>
+                    Try Again
+                `;
+            }
+            
+            // Scroll to results
+            results.scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // Main simulation function
+        async function simulateAttack() {
+            const attackType = document.getElementById('attackType').value;
+            const output = document.getElementById('output');
+            const status = document.getElementById('status');
+            const simulateBtn = document.getElementById('simulateBtn');
+            const results = document.getElementById('results');
+            
+            // Reset UI
+            output.textContent = 'Starting simulation...';
+            status.textContent = 'Running simulation...';
+            document.getElementById('statusBadge').textContent = 'Running...';
+            document.getElementById('statusBadge').className = 'mt-1 text-sm font-medium text-blue-800';
+            document.getElementById('statusBadge').parentElement.className = 'bg-blue-50 p-4 rounded-lg border border-blue-100';
+            document.getElementById('requestsCount').textContent = '0';
+            document.getElementById('detectedCount').textContent = '0';
+            
+            // Reset chart if it exists
+            if (simulationChart) {
+                simulationChart.data.labels = [];
+                simulationChart.data.datasets[0].data = [];
+                simulationChart.data.datasets[1].data = [];
+                simulationChart.update();
+            }
+            
+            // Disable the button during simulation
+            simulateBtn.disabled = true;
+            simulateBtn.innerHTML = `
+                <svg class="animate-spin -ml-1 mr-2 h-4 w-4 text-white inline-block" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                    <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                    <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                </svg>
+                Running...
+            `;
+            
+            // Show results section
+            results.classList.remove('hidden');
+            
+            try {
+                // Call the backend API to start the simulation
+                const response = await fetch('/api/simulate/attack', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        attack_type: attackType,
+                        full_simulation: attackType === 'full_simulation'
+                    })
+                });
+
+                const maybeJson = await response.json().catch(() => null);
+
+                if (!response.ok) {
+                    const detail = (maybeJson && (maybeJson.stderr || maybeJson.message))
+                        ? (maybeJson.stderr || maybeJson.message)
+                        : `HTTP error! status: ${response.status}`;
+                    throw new Error(detail);
+                }
+
+                const data = maybeJson;
+                console.log('Simulation response:', data);
+
+                // Backend returns {status, results:[...], detected, requests_sent}
+                if (data && Array.isArray(data.results)) {
+                    updateChart(data.results);
+                } else {
+                    updateChart(data);
+                }
+
+                updateUI(data);
+                
+            } catch (error) {
+                console.error('Error:', error);
+                
+                // Update status
+                const statusBadge = document.getElementById('statusBadge');
+                statusBadge.textContent = 'Error';
+                statusBadge.className = 'mt-1 text-sm font-medium text-red-800';
+                statusBadge.parentElement.className = 'bg-red-50 p-4 rounded-lg border border-red-100';
+                
+                // Update status message
+                status.innerHTML = `
+                    <div class="rounded-md bg-red-50 p-4">
+                        <div class="flex">
+                            <div class="flex-shrink-0">
+                                <svg class="h-5 w-5 text-red-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd" />
+                                </svg>
+                            </div>
+                            <div class="ml-3">
+                                <p class="text-sm font-medium text-red-800">
+                                    Error: ${error.message}
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                
+                // Show the error in the results section
+                if (results) {
+                    output.textContent = `Error: ${error.message}\n\n${error.stack || ''}`;
+                    results.classList.remove('hidden');
+                }
+                
+                // Re-enable the button
+                if (simulateBtn) {
+                    simulateBtn.disabled = false;
+                    simulateBtn.innerHTML = `
+                        <svg class="w-4 h-4 mr-2 -ml-1 inline-block" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path>
+                        </svg>
+                        Try Again
+                    `;
+                }
+            }
+        }
+    </script>
+</body>
+</html>
